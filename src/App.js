@@ -1,24 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import MonacoEditor from './components/MonacoEditor';
+import Console from './components/Console';
+
+console.stdlog = console.log.bind(console);
+console.logs = [];
+console.log = function(){
+  console.logMap = Array.from(arguments);
+  console.stdlog.apply(console, arguments);
+};
 
 function App() {
+  const [text, setText] = useState('');
+
+  const onChange = (value, e) => {
+    console.logMap = '';
+    try {
+      // eslint-disable-next-line no-eval
+      eval(value);
+    } catch(error) {
+      console.log(error);
+    }
+    setText(console.logMap);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <MonacoEditor onChange={onChange}/>
+      <Console text={text}/>
     </div>
   );
 }
