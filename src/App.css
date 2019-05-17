@@ -1,13 +1,13 @@
 .console-output {
   float: right;
-  width: calc(100% - 800px);
-  background-color: black;
-  background-image: radial-gradient(rgba(0, 150, 0, 0.75), black 120%);
+  width: 40%;
+  background-color: white;
+  /*background-image: radial-gradient(rgba(0, 150, 0, 0.75), black 120%);*/
   height: 100vh;
   margin: 0;
   overflow: hidden;
   padding: 2rem;
-  color: white;
+  color: #454545de;
   font: 1.3rem Inconsolata, monospace;
   text-shadow: 0 0 5px #C8C8C8;
   box-sizing: border-box;
@@ -47,4 +47,10 @@
 
 .app {
   height: 100%;
+}
+
+.output {
+  display: block;
+  border-bottom: 1px solid rgba(200, 200, 200, 0.25);
+  padding: 5px 0;
 }
