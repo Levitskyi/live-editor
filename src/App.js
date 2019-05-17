@@ -36,7 +36,7 @@ function App() {
   };
 
   const editorDidMount = (editor) => {
-    socket = io.connect('http://192.168.0.102:4000/');
+    socket = io.connect('https://live-editor.herokuapp.com/');
 
     const getFromSocket = (data) => {
       const viewState = editor.saveViewState();
