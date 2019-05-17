@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/live-editor/static/css/main.031250c4.chunk.css",
-    "main.js": "/live-editor/static/js/main.e5218416.chunk.js",
-    "main.js.map": "/live-editor/static/js/main.e5218416.chunk.js.map",
+    "main.js": "/live-editor/static/js/main.a5a75a52.chunk.js",
+    "main.js.map": "/live-editor/static/js/main.a5a75a52.chunk.js.map",
     "runtime~main.js": "/live-editor/static/js/runtime~main.ba7687b3.js",
     "runtime~main.js.map": "/live-editor/static/js/runtime~main.ba7687b3.js.map",
     "static/css/2.b7884e10.chunk.css": "/live-editor/static/css/2.b7884e10.chunk.css",
@@ -21,7 +21,7 @@
     "index.html": "/live-editor/index.html",
     "json.worker.js": "/live-editor/json.worker.js",
     "json.worker.js.map": "/live-editor/json.worker.js.map",
-    "precache-manifest.b7625fa0989d7eb6f4bdb92c0cb6a9eb.js": "/live-editor/precache-manifest.b7625fa0989d7eb6f4bdb92c0cb6a9eb.js",
+    "precache-manifest.3f0ad830a8700d490f1ae8a8d5317e46.js": "/live-editor/precache-manifest.3f0ad830a8700d490f1ae8a8d5317e46.js",
     "service-worker.js": "/live-editor/service-worker.js",
     "static/css/2.b7884e10.chunk.css.map": "/live-editor/static/css/2.b7884e10.chunk.css.map",
     "static/css/main.031250c4.chunk.css.map": "/live-editor/static/css/main.031250c4.chunk.css.map",
