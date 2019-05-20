@@ -57,7 +57,7 @@ function App() {
   return (
     <div className="app">
       <MonacoEditor value={text} onChange={onChange} editorDidMount={editorDidMount} />
-      <Console output={output}/>
+      <Console logs={output}/>
     </div>
   );
 }
