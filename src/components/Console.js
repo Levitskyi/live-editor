@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Console = ({ logs }) => {
+const Console = ({ logs, code }) => {
     const [output, setOutput] = useState(null);
     const [liveReload, setLiveReload] = useState(true);
 
@@ -9,29 +9,42 @@ const Console = ({ logs }) => {
         setLiveReload(!liveReload);
     };
 
-    const definedOutput = !liveReload ? output : logs;
+    const runCode = () => {
+        console.logs = [];
+        try {
+            // eslint-disable-next-line no-eval
+            eval(code);
+        } catch(error) {
+            console.log(error);
+        }
+        setOutput([...console.logs]);
+    };
+
+    const definedOutput = output;
+    // const definedOutput = !liveReload ? output : logs;
 
     return (
         <div className="console-output">
             <div className="actions">
-                {!liveReload && <button onClick={() => setOutput(console.logs)}>RUN</button>}
+                <button onClick={runCode}>RUN</button>
                 <button onClick={() => setOutput(null)}>CLEAR</button>
-                <label>
-                    <input checked={liveReload} onChange={onLiveReloadChange} type="checkbox"/>
-                    live reload
-                </label>
+                {/*<label>*/}
+                {/*    <input checked={liveReload} onChange={onLiveReloadChange} type="checkbox"/>*/}
+                {/*    live reload*/}
+                {/*</label>*/}
             </div>
             <pre>
                 {
                     definedOutput && definedOutput.map((element, index) => {
-                        const [item] = element;
-                        const text = item && item.message ? item.message
-                            : JSON.stringify(
-                                element.length > 1 ? element : element[0]
-                            );
+                        const { message, lineNumber } = element;
+                        const [item] = message;
+                        const mes =  message.length > 1 ? message : message[0];
+                        const lastMes = mes === undefined ? 'undefined' : JSON.stringify(mes);
+                        const text = item && item.message ? item.message : lastMes;
                         return (
                             <output className="output" key={index}>
                                 {text}
+                                <span className="sticky-text">{ lineNumber && `line:${lineNumber}`}</span>
                             </output>
                         )
                     })

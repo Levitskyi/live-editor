@@ -8,20 +8,12 @@ import lodash from 'lodash';
 console.stdlog = console.log.bind(console);
 console.logs = [];
 console.log = (...args) => {
-  console.logs.push(args);
+  const firstPart = (new Error()).stack.split('<anonymous>')[1];
+  const lineNumber = firstPart && firstPart.split(':')[1];
+  console.logs.push({ lineNumber, message: args });
 };
 
 let socket;
-
-const runCode = (code) => {
-  console.logs = [];
-  try {
-    // eslint-disable-next-line no-eval
-    eval(code);
-  } catch(error) {
-    console.log(error);
-  }
-};
 
 function App() {
   const [output, setOutput] = useState('');
@@ -29,8 +21,8 @@ function App() {
   const debounced = lodash.debounce(() => setOutput(console.logs), 700);
 
   const onChange = (value, e) => {
-    runCode(value);
-    debounced();
+    // runCode(value);
+    // debounced();
     socket.emit('mess', value);
     setText(value);
   };
@@ -41,23 +33,23 @@ function App() {
     const getFromSocket = (data) => {
       const viewState = editor.saveViewState();
       setText(data);
-      runCode(data);
-      debounced();
+      // runCode(data);
+      // debounced();
       editor.restoreViewState(viewState);
     };
 
     socket.on('text', getFromSocket);
     socket.on('newUser', (data) => {
       setText(data);
-      runCode(data);
-      debounced();
+      // runCode(data);
+      // debounced();
     });
   };
 
   return (
     <div className="app">
       <MonacoEditor value={text} onChange={onChange} editorDidMount={editorDidMount} />
-      <Console logs={output}/>
+      <Console code={text} logs={output}/>
     </div>
   );
 }
