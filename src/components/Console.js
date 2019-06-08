@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import ConsoleService from '../ConsoleService';
 
 const Console = ({ logs, code }) => {
     const [output, setOutput] = useState(null);
     const [liveReload, setLiveReload] = useState(true);
+
+    useEffect(() => {
+        ConsoleService.subscribe(setOutput);
+    },[]);
 
     const onLiveReloadChange = () => {
         setOutput(null);
@@ -20,6 +25,11 @@ const Console = ({ logs, code }) => {
         setOutput([...console.logs]);
     };
 
+    const clearLogs = () => {
+        setOutput(null);
+        console.logs = [];
+    };
+
     const definedOutput = output;
     // const definedOutput = !liveReload ? output : logs;
 
@@ -27,7 +37,7 @@ const Console = ({ logs, code }) => {
         <div className="console-output">
             <div className="actions">
                 <button onClick={runCode}>RUN</button>
-                <button onClick={() => setOutput(null)}>CLEAR</button>
+                <button onClick={clearLogs}>CLEAR</button>
                 {/*<label>*/}
                 {/*    <input checked={liveReload} onChange={onLiveReloadChange} type="checkbox"/>*/}
                 {/*    live reload*/}
