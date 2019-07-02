@@ -1,18 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import ConsoleService from '../ConsoleService';
+import ConsoleService from '../services/ConsoleService';
+import io from '../services/SocketService';
 
-const Console = ({ logs, code }) => {
+const Console = ({ code }) => {
     const [output, setOutput] = useState(null);
-    const [liveReload, setLiveReload] = useState(true);
-
-    useEffect(() => {
-        ConsoleService.subscribe(setOutput);
-    },[]);
-
-    const onLiveReloadChange = () => {
-        setOutput(null);
-        setLiveReload(!liveReload);
-    };
 
     const runCode = () => {
         console.logs = [];
@@ -25,23 +16,29 @@ const Console = ({ logs, code }) => {
         setOutput([...console.logs]);
     };
 
+    useEffect(() => {
+        ConsoleService.subscribe(setOutput);
+        io.socket.on('run', runCode);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[]);
+
+    const handleOnRun = () => {
+        runCode();
+        io.emitRun('bla');
+    };
+
     const clearLogs = () => {
         setOutput(null);
         console.logs = [];
     };
 
     const definedOutput = output;
-    // const definedOutput = !liveReload ? output : logs;
 
     return (
         <div className="console-output">
             <div className="actions">
-                <button onClick={runCode}>RUN</button>
+                <button onClick={handleOnRun}>RUN</button>
                 <button onClick={clearLogs}>CLEAR</button>
-                {/*<label>*/}
-                {/*    <input checked={liveReload} onChange={onLiveReloadChange} type="checkbox"/>*/}
-                {/*    live reload*/}
-                {/*</label>*/}
             </div>
             <pre>
                 {
